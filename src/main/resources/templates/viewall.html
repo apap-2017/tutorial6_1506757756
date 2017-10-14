@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"></link>
+<script src="//code.jquery.com/jquery-2.2.3.js" type="text/javascript"></script>
+<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" type="text/javascript"></script> 
+    <head>
+        <title>View All Students</title>
+    </head>
+    <script>
+	    $(document).ready( function () {
+	        $('#example').DataTable();
+	    } );
+    </script>
+    <body>
+        <h1>All Students</h1>
+	       	<table id="example" class="display" cellspacing="0" width="100%">
+		        <thead>
+		            <tr>
+		                <th>No</th>
+		                <th>NPM</th>
+		                <th>Name</th>
+		                <th>GPA</th>
+		                <th>Cum Laude</th>
+		                <th>Delete</th>
+		                <th>Update</th>
+		            </tr>
+		        </thead>
+		        <tfoot>
+		            <tr th:each="student,iterationStatus: ${students}"  th:class="${iterationStatus.odd}?'odd'">
+		                <th th:text="'No. ' + ${iterationStatus.count}">No. 1</th>
+		                <th th:text="'NPM = ' + ${student.npm}">Student NPM</th>
+		                <th th:text="'Name = ' + ${student.name}">Student Name</th>
+		                <th th:text="'GPA = ' + ${student.gpa}">Student GPA</th>
+		                <th th:text="${student.gpa>=3.49}? 'Ya' : 'Tidak'"></th>
+		                <th> <a th:href="'/student/delete/' + ${student.npm}" > Delete Data</a></th>
+		                <th> <a th:href="'/student/update/' + ${student.npm}" > Update Data</a></th>
+		            </tr>
+		        </tfoot>
+		    </table>
+    </body>
+</html>
