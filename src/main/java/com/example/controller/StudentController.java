@@ -23,15 +23,17 @@ public class StudentController
 
 
     @RequestMapping("/")
-    public String index ()
+    public String index (Model model)
     {
+    	model.addAttribute("title", "Index");
         return "index";
     }
 
 
     @RequestMapping("/student/add")
-    public String add ()
+    public String add (Model model)
     {
+    	model.addAttribute("title", "Add Student");
         return "form-add";
     }
 
@@ -40,11 +42,13 @@ public class StudentController
     public String addSubmit (
             @RequestParam(value = "npm", required = false) String npm,
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "gpa", required = false) double gpa)
+            @RequestParam(value = "gpa", required = false) double gpa,
+            Model model)
     {
         StudentModel student = new StudentModel (npm, name, gpa, null);
         studentDAO.addStudent (student);
-
+        
+        model.addAttribute("title", "Add Student Success");
         return "success-add";
     }
 
@@ -57,9 +61,11 @@ public class StudentController
 
         if (student != null) {
             model.addAttribute ("student", student);
+            model.addAttribute("title", "View Student");
             return "view";
         } else {
             model.addAttribute ("npm", npm);
+            model.addAttribute("title", "Not Found");
             return "not-found";
         }
     }
@@ -73,9 +79,11 @@ public class StudentController
 
         if (student != null) {
             model.addAttribute ("student", student);
+            model.addAttribute("title", "View Student");
             return "view";
         } else {
             model.addAttribute ("npm", npm);
+            model.addAttribute("title", "Not Found");
             return "not-found";
         }
     }
@@ -87,6 +95,7 @@ public class StudentController
         List<StudentModel> students = studentDAO.selectAllStudents ();
         model.addAttribute ("students", students);
 
+        model.addAttribute("title", "View Students");
         return "viewall";
     }
 
@@ -98,8 +107,11 @@ public class StudentController
 
         if (student != null) {
         	studentDAO.deleteStudent (npm);
+        	
+        	model.addAttribute("title", "Delete Student");
             return "delete";
         } else {
+        	model.addAttribute("title", "Not Found");
             return "not-found";
         }
         
@@ -111,27 +123,18 @@ public class StudentController
     	StudentModel student = studentDAO.selectStudent(npm);
         	if(student != null) {
         		model.addAttribute ("student", student);
+        		model.addAttribute("title", "Update Student");
         		return "form-update";
         	}
+        model.addAttribute("title", "Not Found");
         return "not-found";
     }
     
-//    @RequestMapping(value = "/student/update/submit", method = RequestMethod.POST)
-//	  public String updateSubmit (
-//	  		@RequestParam(value = "npm", required = false) String npm,
-//	          @RequestParam(value = "name", required = false) String name,
-//	          @RequestParam(value = "gpa", required = false) double gpa)
-//	  {
-//	  	StudentModel student = new StudentModel (npm, name, gpa);
-//	  	studentDAO.updateStudent (student);
-//	
-//	      return "success-update";
-//	  }
-    
     @RequestMapping(value = "/student/update/submit", method = RequestMethod.POST)
-    public String updateSubmit (@ModelAttribute StudentModel student)
+    public String updateSubmit (@ModelAttribute StudentModel student, Model model)
     {
     	studentDAO.updateStudent (student);
+    	model.addAttribute("title", "Update Success");
         return "success-update";
     }
     
@@ -143,9 +146,11 @@ public class StudentController
 
         if (course != null) {
             model.addAttribute ("course", course);
+            model.addAttribute("title", "View Course");
             return "viewCourse";
         } else {
             model.addAttribute ("course", course);
+            model.addAttribute("title", "Not Found");
             return "course-not-found";
         }
     }

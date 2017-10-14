@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Fragment</title>
+	<div th:fragment="title">
+		<title th:text="${title}">Title</title>
+	</div>
 </head>
 <body>
 	<div th:fragment="header">

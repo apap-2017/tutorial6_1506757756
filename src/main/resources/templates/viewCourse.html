@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>View Course</title>
+        <div th:replace="fragments/fragment :: title"></div>
     </head>
     <body>
        	<h3 th:text="'ID = ' + ${course.id_course}">Course ID</h3>
